@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.10.1",
         "owl-admin/components": "^0.2.1",
         "php-imap/php-imap": "^5.0",
+        "phpmailer/phpmailer": "^6.10",
         "predis/predis": "^3.0",
         "slowlyo/owl-admin": "^4.2",
         "slowlyo/owl-dict": "^1.3",

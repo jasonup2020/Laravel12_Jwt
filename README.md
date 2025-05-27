@@ -261,6 +261,6 @@ composer require slowlyo/owl-operation-log
 composer require slowlyo/owl-amis-json-parse
 
 # 安装必要的包Google邮件服务
-# composer require google/apiclient
-# composer require league/oauth2-google
+### composer require google/apiclient
+### composer require league/oauth2-google
 composer require php-imap/php-imap

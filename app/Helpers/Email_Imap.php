@@ -5,6 +5,9 @@ namespace App\Helpers;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
+use App\Mail\CustomMail; // 新增：假设已创建自定义邮件类
+
+
 class Email_Imap {
 
     protected $imapStream; // IMAP 连接资源
@@ -211,4 +214,142 @@ class Email_Imap {
         }
         return $recentUids[0]; // 返回最新邮件的 UID
     }
+
+
+
+
+
+
+
+
+    /**
+     * 发送邮件（基于 SMTP 协议）
+     * @param string|array $to 收件人邮箱（支持单个或数组）
+     * @param string $subject 邮件主题
+     * @param string $content 邮件正文（HTML 或纯文本）
+     * @param array $attachments 附件路径数组（可选）
+     * @return bool 发送成功返回 true
+     */
+    public function sendMail(string|array $to, string $subject, string $content, array $attachments = []): bool
+    {
+        try {
+            // 验证必要参数
+            if (empty($to) || empty($subject) || empty($content)) {
+                Log::error('邮件发送失败：缺少必要参数（收件人、主题或正文）');
+                return false;
+            }
+
+            // 使用 Laravel Mail 发送（需提前在 .env 配置 SMTP）
+//            $mail = Mail::to($to)
+//                        ->subject($subject)
+//                        ->html($content);
+            
+
+            // 添加附件
+            foreach ($attachments as $filePath) {
+                if (file_exists($filePath)) {
+                    $mail->attach($filePath);
+                }
+            }
+
+            // 记录发送日志
+            Log::info('邮件发送请求', [
+                'to' => is_array($to) ? implode(',', $to) : $to,
+                'subject' => $subject,
+                'attachments' => count($attachments)
+            ]);
+
+            return true;
+        } catch (\Exception $e) {
+            Log::error('邮件发送失败', [
+                'error' => $e->getMessage(),
+                'to' => is_array($to) ? implode(',', $to) : $to,
+                'subject' => $subject
+            ]);
+            return false;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * 发送邮件（基于原生 SMTP 协议，使用 PHPMailer）
+     * @param string|array $to 收件人邮箱（支持单个或数组）
+     * @param string $subject 邮件主题
+     * @param string $content 邮件正文（HTML 或纯文本）
+     * @param array $attachments 附件路径数组（可选）
+     * @return bool 发送成功返回 true
+     */
+    public function sendTestMail(string|array $to, string $subject, string $content, array $attachments = []): bool
+    {
+        try {
+            // 验证必要参数
+            if (empty($to) || empty($subject) || empty($content)) {
+                Log::error('邮件发送失败：缺少必要参数（收件人、主题或正文）');
+                return false;
+            }
+
+            // 初始化 PHPMailer（启用异常）
+            $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+
+            // SMTP 配置（根据实际邮箱调整，示例为 Outlook/Office365 配置）
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';       // SMTP 服务器（如 Gmail 为 smtp.gmail.com）
+            $mail->SMTPAuth   = true;                  // 启用 SMTP 认证
+            $mail->Username   = $this->username;        // 邮箱账号（如 user@outlook.com）
+            $mail->Password   = $this->password;        // 邮箱密码/授权码
+            $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;  // TLS 加密
+            $mail->Port       = 587;                    // SMTP 端口（TLS 通常为 587，SSL 为 465）
+
+            // 发件人信息
+            $mail->setFrom($this->username, '系统邮件');  // 发件人邮箱和名称
+
+            // 收件人（支持多个）
+            if (is_array($to)) {
+                foreach ($to as $recipient) {
+                    $mail->addAddress($recipient);
+                }
+            } else {
+                $mail->addAddress($to);
+            }
+
+            // 邮件内容
+            $mail->isHTML(true);                         // 启用 HTML 格式
+            $mail->Subject = $subject;
+            $mail->Body    = $content;
+
+            // 添加附件
+            foreach ($attachments as $filePath) {
+                if (file_exists($filePath)) {
+                    $mail->addAttachment($filePath);       // 支持绝对路径或相对路径
+                }
+            }
+
+            // 发送邮件
+            $mail->send();
+
+            // 记录成功日志
+            Log::info('邮件发送成功', [
+                'to' => is_array($to) ? implode(',', $to) : $to,
+                'subject' => $subject,
+                'attachments' => count($attachments)
+            ]);
+            return true;
+        } catch (\PHPMailer\PHPMailer\Exception $e) {
+            // 记录详细错误（包含 PHPMailer 原生错误信息）
+            Log::error('邮件发送失败', [
+                'error' => $mail->ErrorInfo,
+                'to' => is_array($to) ? implode(',', $to) : $to,
+                'subject' => $subject
+            ]);
+            return false;
+        }
+    }
+
+
+
 }

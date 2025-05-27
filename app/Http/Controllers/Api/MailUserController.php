@@ -45,7 +45,7 @@ class MailUserController extends BaseController
         try {
             $validated = $request->validate([
                 'provider' => 'required|in:gmail,outlook,orther',  // 新增pop3选项
-                'id' => 'required|integer|min:1'
+                'id' => 'required|string|min:1'
             ]);
             
             
@@ -76,7 +76,7 @@ class MailUserController extends BaseController
         try {
             $validated = $request->validate([
                 'provider' => 'required|in:gmail,outlook,orther',  // 新增pop3选项
-                'id' => 'required|integer|min:1'
+                'id' => 'required|string|min:1'
             ]);
 
             $this->info("core:emails_fetch_job_to_console --provider=".$validated["provider"]." --message-id=".$validated['id']);
@@ -102,5 +102,43 @@ class MailUserController extends BaseController
             return message("邮件下载任务提交失败，请稍后重试", 500);
         }
     }
+    
+    
+    
+    
+    public function getTestEmailUserC_J(Request $request) {
+        Log::info("EmailController->getEmailUserC_J", $request->all());
+        try {
+            $validated = $request->validate([
+                'provider' => 'required|in:gmail,outlook,orther',  // 新增pop3选项
+                'id' => 'required|string|min:1'
+            ]);
+
+            $this->info("core:emails_fetch_job_to_console --provider=".$validated["provider"]." --message-id=".$validated['id']);
+            Log::info("core:fetch_emails_job_to_console_test --provider=".$validated["provider"]." --message-id=".$validated['id']);
+            // 调用 Artisan 命令，使用 $validated 中的参数
+            $exitCode = Artisan::call('core:emails_fetch_job_to_console', [
+                '--provider' => $validated['provider'],  // 从 $validated 中获取 provider
+                '--message-id' => $validated['id']       // 从 $validated 中获取 id（对应邮件ID）
+            ]);
+
+            if ($exitCode === 0) {
+                Log::info('邮件抓取命令执行成功', $validated);
+                return message("邮件下载任务已提交，稍后查看日志或通知");
+            } else {
+                Log::error('邮件抓取命令执行失败，退出码：' . $exitCode, $validated);
+                return message("邮件下载任务提交失败（命令执行异常），请检查日志", 500);
+            }
+        } catch (ValidationException $e) {
+            Log::error('请求参数验证失败', ['errors' => $e->errors()]);
+            return message("参数错误：" . implode('; ', $e->errors()[array_key_first($e->errors())]), 422);
+        } catch (Exception $e) {
+            Log::error('邮件抓取命令调用失败', ['error' => $e->getMessage()]);
+            return message("邮件下载任务提交失败，请稍后重试", 500);
+        }
+    }
+    
+    
+    
     
 }
