@@ -70,8 +70,6 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
         if (!empty($messageId)) {
             $m_esu = $m_esu->wherein("id", explode(',', $messageId));
         }
-        
-        print_r($dn_ec);
         $d_eu = $m_esu->orderby("sort", "desc")->get()->toArray();
         foreach ($d_eu as $key => $value) {
             $_s = $dn_ec[$value["email_config_id"]];
@@ -87,11 +85,11 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
                 $password = $value["privated_code"];
             }
             
-            $log_sendTestMail=["server"=>$server, "port"=>$port, "encryption"=>$encryption, "username"=>$username, "password"=>$password,];
+            $log_sendTestMail=["server"=>$server, "port"=>$port, "encryption"=>$encryption, "username"=> trim($username), "password"=>$password,];
             Log::info("sendTestMail 001 ",$log_sendTestMail);
             $e_s = new Email_Imap($server, $port, $encryption, $username, $password);
             $subject = "test";
-            $content = "test " . time();
+            $content = "test " . date("y-m-d H:i:s");
             $sendTestMail = $e_s->sendTestMail("jasonup2020@gmail.com", $subject, $content);
             $log_sendTestMail["sendTestMail"]=$sendTestMail;
             var_dump(["sendTestMail" => $sendTestMail]);
