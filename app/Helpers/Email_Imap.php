@@ -306,7 +306,7 @@ class Email_Imap {
             $mail->Port       = 587;                    // SMTP 端口（TLS 通常为 587，SSL 为 465）
 
             // 发件人信息
-            $mail->setFrom($this->username, '系统邮件');  // 发件人邮箱和名称
+            $mail->setFrom($this->username, 'Server Email');  // 发件人邮箱和名称
 
             // 收件人（支持多个）
             if (is_array($to)) {
