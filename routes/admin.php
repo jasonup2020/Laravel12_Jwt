@@ -24,7 +24,9 @@ Route::group([
     // Email邮件
     $router->resource('email/mail_order', \App\Admin\Controllers\Email\MailOrderController::class);
     // Email发送邮件用户
-    $router->resource('mail_send_user', \App\Admin\Controllers\Email\MailSendUserController::class);
+    $router->resource('email/mail_send_user', \App\Admin\Controllers\Email\MailSendUserController::class);
+    // 汇率表
+    $router->resource('email/currency_exchange_rates', \App\Admin\Controllers\Email\CurrencyExchangeRateController::class);
     // mail
     $router->get('public/emailGetConfig', [\Slowlyo\OwlAdmin\Controllers\AdminApiController::class, 'index']);
 
