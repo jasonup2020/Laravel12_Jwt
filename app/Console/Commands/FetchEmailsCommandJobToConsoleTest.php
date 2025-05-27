@@ -30,7 +30,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
     public function handle() {
         // 获取用户输入的参数（若未指定，则默认下载所有待处理邮件）
         $provider = $this->option('provider') ?: 'gmail'; // 默认下载 Gmail 邮件
-        $messageId = $this->option('message-id') ?: 1;    // 默认下载 ID 为 1 的邮件
+        $messageId = $this->option('message-id') ?: 0;    // 默认下载 ID 为 1 的邮件
         // 分发 Job 任务（使用 Redis 队列，延迟 20 秒执行）
 //        FetchEmailJob::dispatch([
 //            'provider' => $provider,
@@ -51,7 +51,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
      * @param type $provider
      * @param type $messageId
      */
-    public function getEmail($provider = "gmail", $messageId = 1, $is_sql = 0) {
+    public function getEmail($provider = "gmail", $messageId = 0, $is_sql = 0) {
         $m_esu = new MailSendUserModel();
         $m_ec = new MailConfModel();
         if ($is_sql) {
@@ -92,7 +92,6 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             $content = "test " . date("y-m-d H:i:s");
             $sendTestMail = $e_s->sendTestMail("jasonup2020@gmail.com", $subject, $content);
             $log_sendTestMail["sendTestMail"]=$sendTestMail;
-            var_dump(["sendTestMail" => $sendTestMail]);
             
             Log::info("sendTestMail 002 ",$log_sendTestMail);
             $this->info(json_encode(["server"=>$server, "port"=>$port, "encryption"=>$encryption, "username"=>$username, "password"=>$password,"sendTestMail"=>$sendTestMail],256+64));
