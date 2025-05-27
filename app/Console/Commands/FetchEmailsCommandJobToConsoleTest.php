@@ -96,7 +96,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             $log_sendTestMail["sendTestMail"]=$sendTestMail;
             var_dump(["sendTestMail" => $sendTestMail]);
             
-            Log::info("sendTestMail 002 ",Log::info("sendTestMail 001 ",$log_sendTestMail));
+            Log::info("sendTestMail 002 ",$log_sendTestMail);
             $this->info(json_encode(["server"=>$server, "port"=>$port, "encryption"=>$encryption, "username"=>$username, "password"=>$password,"sendTestMail"=>$sendTestMail],256+64));
             sleep(10); ###暂停10秒
 //            usleep(30000); ######// 10 * 1000 = 10,000 微秒  暂停25毫秒
