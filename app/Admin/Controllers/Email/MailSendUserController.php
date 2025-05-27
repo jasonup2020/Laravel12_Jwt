@@ -53,7 +53,7 @@ class MailSendUserController extends AdminController
 		return $this->baseForm()->body([
 			amis()->TextControl('name', '用户名称'),
 			amis()->TextControl('email', 'Email用户'),
-			amis()->TextControl('email_config_id', 'Email配置ID'),
+			amis()->SelectControl('email_config_id', 'Email配置ID')->required()->source('/../api/email/mail_conf/get_conf'),
 			amis()->TextControl('passwords', 'Email用户密码'),
 			amis()->TextControl('privated_user', 'Email_API专业用户'),
 			amis()->TextControl('privated_code', 'Email_API专业密码'),

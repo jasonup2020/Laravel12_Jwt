@@ -46,7 +46,8 @@ class MailUserController extends AdminController
 		return $this->baseForm()->body([
 			amis()->TextControl('name', '用户名'),
 			amis()->TextControl('email', 'Email用户'),
-			amis()->SelectControl('email_config_id', 'Email配置ID')->options(json_decode(file_get_contents(env("APP_URL")."/api/email/mail_conf/get_conf"), true)),
+			amis()->SelectControl('email_config_id', 'Email配置ID')->required()->menuTpl('${label} <span class="text-gray-300 pl-2">${table}</span>')->source('/../api/email/mail_conf/get_conf'),
+			
 			amis()->TextControl('passwords', 'Email用户密码'),
 			amis()->TextControl('privated_user', 'Email_API专业用户'),
 			amis()->TextControl('privated_code', 'Email_API专业密码'),
