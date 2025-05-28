@@ -128,6 +128,7 @@ class ChuanglanSmsColl {
                 if($mobile){
                     $mobile.=";";
                 }
+                $v_1_1= trim($v_1);
                 $mobile.=$v_1_1.",".$content."|". date("y-m-d");
             }
         }else{
