@@ -46,7 +46,7 @@ class ChuanglanSmsColl {
             'extend' => $options['extend'] ?? '', // 扩展码（可选）
         ];
 
-        $this->info(json_decode($params,256+64));
+//        $this->info(json_decode($params,256+64));
         Log::info("sendSms ",$params);
         // 发送HTTP请求
         $ch = curl_init();
