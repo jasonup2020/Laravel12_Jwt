@@ -97,14 +97,19 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
                 $err_email[]=$value;
             } else {
                 //邮件发送成功
+                Log::info("sendTestMail Ok:", $log_sendTestMail);
             }
-            Log::info("sendTestMail :", $log_sendTestMail);
+            
             $this->info(json_encode(["username" => $username, "sendTestMail" => $sendTestMail], 256 + 64));
             sleep(5); ###暂停10秒
 //            usleep(30000); ######// 10 * 1000 = 10,000 微秒  暂停25毫秒
         }
-        
-        $this->info(json_encode($err_email, 256 + 64));
+        if(!empty($err_email)){
+            $err_email_name= array_key_value($err_email, "name",true);
+            $err_email_id= array_key_value($err_email, "id",true);
+            print_r([$err_email_name,$err_email_id]);
+        }
+//        $this->info(json_encode($err_email, 256 + 64));
     }
 
 }
