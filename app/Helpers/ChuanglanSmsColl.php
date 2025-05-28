@@ -136,8 +136,10 @@ class ChuanglanSmsColl {
         }
         Log::info("mobile $mobile");
         $params = [
-            'appId' => 'V3dwtFT5', // appId,登录万数平台查看
-            'appKey' => 'ckijkHkj', // appKey,登录万数平台查看
+//            'appId' => 'V3dwtFT5', // appId,登录万数平台查看
+//            'appKey' => 'ckijkHkj', // appKey,登录万数平台查看
+            'appId' => '70uJoSSO', // appId,登录万数平台查看
+            'appKey' => 'LESmjUni', // appKey,登录万数平台查看
             'templateId'=>'1376627078934736896', # 您的帐号{1}异常，时间{2},请及时处理
 //            'mobile' => '13257225590,abc123456|2025-5-26 18:51', // 在批量语音通知接口中调用成功后返回的 "callId"
 //            'mobile' => '13257225590,abc123456|2025-5-26 18:51', // 在批量语音通知接口中调用成功后返回的 "callId"
