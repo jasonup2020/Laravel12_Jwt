@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail; // 假设已创建测试邮件类
-use App\Models\Email\MailSendUserModel;
+use App\Models\Job\MailSendUserModel;
 use App\Helpers\ChuanglanSmsColl;
 use Illuminate\Support\Facades\Log;
 
