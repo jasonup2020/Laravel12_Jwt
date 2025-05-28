@@ -70,7 +70,8 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
         if (!empty($messageId)) {
             $m_esu = $m_esu->wherein("id", explode(',', $messageId));
         }
-        $d_eu = $m_esu->orderby("sort", "desc")->get()->toArray();
+        $d_eu = $m_esu->orderby("sort", "desc")->get(["id","name","email","email_config_id","passwords","privated_user","privated_code","phone","updated_at"])->toArray();
+        $err_email=[];
         foreach ($d_eu as $key => $value) {
             $_s = $dn_ec[$value["email_config_id"]];
             $server = $_s["server"];
@@ -86,23 +87,24 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             }
 
             $log_sendTestMail = ["server" => $server, "port" => $port, "encryption" => $encryption, "username" => trim($username), "password" => $password,];
-
             $e_s = new Email_Imap($server, $port, $encryption, $username, $password);
             $subject = "test";
             $content = "test " . date("y-m-d H:i:s");
             $sendTestMail = $e_s->sendTestMail("jasonup2020@gmail.com", $subject, $content);
             $log_sendTestMail["sendTestMail"] = $sendTestMail;
-
             if (empty($sendTestMail)) {
                 //邮件发送失败
+                $err_email[]=$value;
             } else {
                 //邮件发送成功
             }
-            Log::info("sendTestMail :", ["username" => $username, "sendTestMail" => $sendTestMail]);
-            $this->info(json_encode(["server" => $server, "username" => $username, "sendTestMail" => $sendTestMail], 256 + 64));
+            Log::info("sendTestMail :", $log_sendTestMail);
+            $this->info(json_encode(["username" => $username, "sendTestMail" => $sendTestMail], 256 + 64));
             sleep(5); ###暂停10秒
 //            usleep(30000); ######// 10 * 1000 = 10,000 微秒  暂停25毫秒
         }
+        
+        $this->info(json_encode($err_email, 256 + 64));
     }
 
 }
