@@ -29,7 +29,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
     private $call=[
         "13257225590",#自己
         "13728734406",#志林
-//        "13128823618",#老板
+        "13128823618",#老板
         "13612829202",#Yu
         "18810164972"#Allen
         ];

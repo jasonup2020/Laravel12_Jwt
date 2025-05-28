@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('core:update_exchange_rates')->dailyAt('23:00')->timezone('Asia/Shanghai')->withoutOverlapping(); // 时区设置为上海
         
         // 每三小时执行一次邮件测试命令
-        $schedule->command('core:mail_send_user_test')
+        $schedule->command('core:fetch_emails_job_to_console_test --provider=gmail --message-id=0')
                  ->everyThreeHours()
                  ->withoutOverlapping() // 防止任务重叠
                  ->onQueue('default'); // 指定队列（可选，根据项目队列配置调整）
