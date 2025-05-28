@@ -37,7 +37,7 @@ class ChuanglanSmsColl {
         $params = [
             'account' => $this->account,
             'password' => $this->password,
-            'msg' => $content,
+            'msg' => "【创蓝云智】".$content,
             'phone' => $phone,
             'report' => $options['report'] ?? 'false',
             'callbackUrl' => $options['callbackUrl'] ?? '',
@@ -46,6 +46,8 @@ class ChuanglanSmsColl {
             'extend' => $options['extend'] ?? '', // 扩展码（可选）
         ];
 
+        $this->info(json_decode($params,256+64));
+        Log::info("sendSms ",$params);
         // 发送HTTP请求
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
