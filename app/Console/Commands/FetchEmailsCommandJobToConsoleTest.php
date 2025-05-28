@@ -9,6 +9,7 @@ use App\Jobs\FetchEmailJob;
 use App\Models\Job\MailUserModel; // 假设存在用户模型，用于获取待下载的邮件数据
 use App\Models\Job\MailSendUserModel; // 假设存在用户模型，用于获取待下载的邮件数据
 use App\Models\Job\MailConfModel; // 假设存在用户模型，用于获取待下载的邮件数据
+use App\Helpers\ChuanglanSmsColl;
 
 class FetchEmailsCommandJobToConsoleTest extends Command {
 
@@ -107,7 +108,9 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
         if(!empty($err_email)){
             $err_email_name= array_key_value($err_email, "name",true);
             $err_email_id= array_key_value($err_email, "id",true);
-            print_r([$err_email_name,$err_email_id]);
+//            print_r([$err_email_name,$err_email_id]);
+            $csc=new ChuanglanSmsColl();
+            $csc->sendColl(["13257225590"], implode(",", $err_email_name));
         }
 //        $this->info(json_encode($err_email, 256 + 64));
     }
