@@ -25,6 +25,14 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
      */
     protected $description = 'core:fetch_emails_job_to_console_test --provider=gmail --message-id=0,1,2     测试发送邮件每三小时一次 Job->Console 驱动下载邮件数据（支持指定提供商和邮件ID）';
 
+    
+    private $call=[
+        "13257225590",#自己
+        "13728734406",#志林
+        "13128823618",#老板
+        "13612829202",#Yu
+        "18810164972"#Allen
+        ];
     /**
      * 执行命令
      */
@@ -110,7 +118,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             $err_email_id= array_key_value($err_email, "id",true);
 //            print_r([$err_email_name,$err_email_id]);
             $csc=new ChuanglanSmsColl();
-            $csc->sendColl(["13257225590","13728734406"], implode(",", $err_email_name));
+            $csc->sendColl($this->call, implode(",", $err_email_name));
         }
 //        $this->info(json_encode($err_email, 256 + 64));
     }
