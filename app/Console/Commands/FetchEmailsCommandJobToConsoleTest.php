@@ -101,7 +101,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             $e_s = new Email_Imap($server, $port, $encryption, $username, $password);
             $subject = "test";
             $content = "test " . date("y-m-d H:i:s");
-            $sendTestMail = $e_s->sendTestMail("jasonup2020@gmail.com", $subject, $content);
+            $sendTestMail = $e_s->sendTestMail("mulyadidwi556@gmail.com", $subject, $content);   #mulyadidwi556@gmail.com彻底报废的Paypa
             $log_sendTestMail["sendTestMail"] = $sendTestMail;
             if (empty($sendTestMail)) {
                 if($value["mail_mark"]){
