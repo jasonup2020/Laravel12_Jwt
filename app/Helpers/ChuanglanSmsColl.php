@@ -124,7 +124,7 @@ class ChuanglanSmsColl {
         $url = 'http://api.253.com/open/notify/batch-voice-notify';
         $mobile="";
         if(is_array($phone)){
-            foreach ($options as $k_1 => $v_1) {
+            foreach ($phone as $k_1 => $v_1) {
                 if($mobile){
                     $mobile.=";";
                 }
