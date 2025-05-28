@@ -29,7 +29,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
     private $call=[
         "13257225590",#自己
         "13728734406",#志林
-        "13128823618",#老板
+//        "13128823618",#老板
         "13612829202",#Yu
         "18810164972"#Allen
         ];
@@ -79,7 +79,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
         if (!empty($messageId)) {
             $m_esu = $m_esu->wherein("id", explode(',', $messageId));
         }
-        $d_eu = $m_esu->orderby("sort", "desc")->get(["id","name","email","email_config_id","passwords","privated_user","privated_code","phone","updated_at"])->toArray();
+        $d_eu = $m_esu->orderby("sort", "desc")->get(["id","name","email","email_config_id","passwords","privated_user","privated_code","phone","mail_mark","updated_at"])->toArray();
         $err_email=[];
         foreach ($d_eu as $key => $value) {
             $_s = $dn_ec[$value["email_config_id"]];
@@ -102,13 +102,15 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             $sendTestMail = $e_s->sendTestMail("jasonup2020@gmail.com", $subject, $content);
             $log_sendTestMail["sendTestMail"] = $sendTestMail;
             if (empty($sendTestMail)) {
-                //邮件发送失败
-                $err_email[]=$value;
+                if($value["mail_mark"]){
+                    //邮件发送失败
+                    $err_email[]=$value;
+                }
+                
             } else {
                 //邮件发送成功
                 Log::info("sendTestMail Ok:", $log_sendTestMail);
             }
-            
             $this->info(json_encode(["username" => $username, "sendTestMail" => $sendTestMail], 256 + 64));
             sleep(5); ###暂停10秒
 //            usleep(30000); ######// 10 * 1000 = 10,000 微秒  暂停25毫秒
