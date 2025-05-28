@@ -17,13 +17,13 @@ class ChuanglanSmsColl {
      * API账号（从创蓝控制台获取）
      * @var string
      */
-    protected $account = 'N5222381'; // 替换为你的API账号
+    protected $account = 'N5243046'; // 替换为你的API账号
 
     /**
      * API密码（从创蓝控制台获取）
      * @var string
      */
-    protected $password = '123456'; // 替换为你的API密码
+    protected $password = ' b7p8EBh413d799'; // 替换为你的API密码
 
     /**
      * 发送国内短信（验证码/通知/营销）

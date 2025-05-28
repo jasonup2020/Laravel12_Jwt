@@ -21,6 +21,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
 
     /**
      * 命令的描述
+     * 【创蓝云智】欢迎使用创蓝公司产品，您的账号已开通，请打开 https://www.chuanglan.com ，使用账号 18126476210 临时密码 8N_e#Ti7^X93 登录并修改密码
      * @var string
      */
     protected $description = 'cron:fetch_emails_job_to_console_test --provider=gmail --message-id=0,1,2     测试发送邮件每三小时一次 Job->Console 驱动下载邮件数据（支持指定提供商和邮件ID）';
@@ -31,6 +32,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
         "13728734406",#志林
         "13128823618",#老板
         "13612829202",#Yu
+        "17702061479",#尹月
         "18810164972"#Allen
         ];
     /**
@@ -105,6 +107,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
                 if($value["mail_mark"]){
                     //邮件发送失败
                     $err_email[]=$value;
+                    Log::error("sendTestMail NO:", $log_sendTestMail);
                 }
                 
             } else {
@@ -112,7 +115,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
                 Log::info("sendTestMail Ok:", $log_sendTestMail);
             }
             $this->info(json_encode(["username" => $username, "sendTestMail" => $sendTestMail], 256 + 64));
-            sleep(5); ###暂停10秒
+            sleep(2); ###暂停10秒
 //            usleep(30000); ######// 10 * 1000 = 10,000 微秒  暂停25毫秒
         }
         if(!empty($err_email)){
@@ -120,9 +123,13 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             $err_email_id= array_key_value($err_email, "id",true);
 //            print_r([$err_email_name,$err_email_id]);
             $csc=new ChuanglanSmsColl();
-            $csc->sendColl($this->call, implode(",", $err_email_name));
+            
+            
+            $sendSms=$csc->sendSms("13257225590", implode(",", $err_email_name));
+            
+            
+//            $csc->sendColl($this->call, implode(",", $err_email_name));
         }
 //        $this->info(json_encode($err_email, 256 + 64));
     }
-
 }
