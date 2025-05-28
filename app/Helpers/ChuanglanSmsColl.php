@@ -120,10 +120,21 @@ class ChuanglanSmsColl {
      * @param array $options 可选参数：report（是否需要状态回执）、callbackUrl（回执回调地址）、uid（自定义参数）
      * @return array 包含成功状态和响应信息的数组
      */
-    public function sendColl(string $phone, string $content, array $options = []) {
+    public function sendColl(array|string $phone, string $content, array $options = []) {
         $url = 'http://api.253.com/open/notify/batch-voice-notify';
-        $mobile=$phone??"13257225590".",";
-        $mobile.=$content??""."|". date("y-m-d");
+        $mobile="";
+        if(is_array($phone)){
+            foreach ($options as $k_1 => $v_1) {
+                if($mobile){
+                    $mobile.=";";
+                }
+                $mobile.=$v_1_1.",".$content."|". date("y-m-d");
+            }
+        }else{
+            $mobile=$phone??"13257225590".",";
+            $mobile.=$content??""."|". date("y-m-d");
+        }
+        Log::info("mobile $mobile");
         $params = [
             'appId' => 'V3dwtFT5', // appId,登录万数平台查看
             'appKey' => 'ckijkHkj', // appKey,登录万数平台查看
