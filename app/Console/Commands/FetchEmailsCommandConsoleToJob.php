@@ -12,13 +12,13 @@ class FetchEmailsCommandConsoleToJob extends Command
      * 命令的签名（可带参数/选项）
      * @var string
      */
-    protected $signature = 'core:emails_fetch_console_to_job {--provider=} {--message-id=}';
+    protected $signature = 'cron:emails_fetch_console_to_job {--provider=} {--message-id=}';
 
     /**
      * 命令的描述
      * @var string
      */
-    protected $description = 'core:emails_fetch_console_to_job --provider=gmail --message-id=1    通过 Console->Job 驱动下载邮件数据（支持指定提供商和邮件ID）';
+    protected $description = 'cron:emails_fetch_console_to_job --provider=gmail --message-id=1    通过 Console->Job 驱动下载邮件数据（支持指定提供商和邮件ID）';
 
     /**
      * 执行命令

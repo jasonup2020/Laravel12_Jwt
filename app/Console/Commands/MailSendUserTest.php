@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail; // 假设已创建测试邮件类
 use App\Models\Email\MailSendUserModel;
 use App\Helpers\ChuanglanSmsColl;
+use Illuminate\Support\Facades\Log;
 
 class MailSendUserTest extends Command
 {
@@ -15,14 +16,14 @@ class MailSendUserTest extends Command
      *
      * @var string
      */
-    protected $signature = 'core:mail_send_user_test';
+    protected $signature = 'cron:mail_send_user_test';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'php artisan core:mail_send_user_test 测试发送邮件每三小时一次';
+    protected $description = 'cron artisan core:mail_send_user_test 测试发送邮件每三小时一次';
 
     /**
      * Execute the console command.
@@ -38,16 +39,17 @@ class MailSendUserTest extends Command
                 return 0;
             }
 
-            // 发送邮件（TestMail 需提前创建，参考 Laravel 邮件文档）
-            foreach ($testUsers as $email) {
-                Mail::to($email)->send(new TestMail());
-                $this->info("测试邮件已发送至：{$email}");
-            }
-            
-            $comm=new ChuanglanSmsColl();
-            
+//            // 发送邮件（TestMail 需提前创建，参考 Laravel 邮件文档）
+//            foreach ($testUsers as $email) {
+//                Mail::to($email)->send(new TestMail());
+//                $this->info("测试邮件已发送至：{$email}");
+//            }
+//            
+//            $comm=new ChuanglanSmsColl();
+//            
 
             $this->info('所有测试邮件发送完成');
+            Log::info("MailSendUserTest",["time"=> date("Y-m-d H:i:s")]);
             return 0;
         } catch (\Exception $e) {
             $this->error("邮件发送失败：{$e->getMessage()}");

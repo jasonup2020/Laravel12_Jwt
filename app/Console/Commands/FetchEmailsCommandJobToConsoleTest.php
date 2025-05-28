@@ -17,13 +17,13 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
      * 命令的签名（可带参数/选项）
      * @var string
      */
-    protected $signature = 'core:fetch_emails_job_to_console_test {--provider=} {--message-id=}';
+    protected $signature = 'cron:fetch_emails_job_to_console_test {--provider=} {--message-id=}';
 
     /**
      * 命令的描述
      * @var string
      */
-    protected $description = 'core:fetch_emails_job_to_console_test --provider=gmail --message-id=0,1,2     测试发送邮件每三小时一次 Job->Console 驱动下载邮件数据（支持指定提供商和邮件ID）';
+    protected $description = 'cron:fetch_emails_job_to_console_test --provider=gmail --message-id=0,1,2     测试发送邮件每三小时一次 Job->Console 驱动下载邮件数据（支持指定提供商和邮件ID）';
 
     
     private $call=[

@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Log;
 
 class UpdateExchangeRates extends Command
 {
-    protected $signature = 'core:update_exchange_rates';
-    protected $description = 'php artisan core:update_exchange_rates    【每日自动更新汇率表（以USD为基准）】';
+    protected $signature = 'cron:update_exchange_rates';
+    protected $description = 'php artisan cron:update_exchange_rates    【每日自动更新汇率表（以USD为基准）】';
 
     public function handle()
     {
