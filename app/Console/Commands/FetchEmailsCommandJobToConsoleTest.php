@@ -83,6 +83,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
         }
         $d_eu = $m_esu->orderby("sort", "desc")->get(["id","name","email","email_config_id","passwords","privated_user","privated_code","phone","mail_mark","updated_at"])->toArray();
         $err_email=[];
+        $err_email_int=0;
         foreach ($d_eu as $key => $value) {
             $_s = $dn_ec[$value["email_config_id"]];
             $server = $_s["server"];
@@ -107,6 +108,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
                 if($value["mail_mark"]){
                     //邮件发送失败
                     $err_email[]=$value;
+                    $err_email_int++;
                     Log::error("sendTestMail NO:", $log_sendTestMail);
                 }
                 
@@ -125,7 +127,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             $csc=new ChuanglanSmsColl();
             
             
-            $sendSms=$csc->sendSms("13257225590", "您的帐号 ".implode(",", $err_email_name)." 就是异常");
+            $sendSms=$csc->sendSms("13257225590", "您有($err_email_int)个帐号[".implode(",", $err_email_name). "]异常");
             
             
 //            $csc->sendColl($this->call, implode(",", $err_email_name));
