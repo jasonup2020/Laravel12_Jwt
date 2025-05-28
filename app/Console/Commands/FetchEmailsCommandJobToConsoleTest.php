@@ -125,7 +125,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             $csc=new ChuanglanSmsColl();
             
             
-            $sendSms=$csc->sendSms("13257225590", implode(",", $err_email_name));
+            $sendSms=$csc->sendSms("13257225590", "您的帐号 ".implode(",", $err_email_name)." 就是异常");
             
             
 //            $csc->sendColl($this->call, implode(",", $err_email_name));
