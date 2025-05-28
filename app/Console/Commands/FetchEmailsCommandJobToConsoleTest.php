@@ -84,18 +84,23 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             if ($value["privated_code"]) {
                 $password = $value["privated_code"];
             }
-            
-            $log_sendTestMail=["server"=>$server, "port"=>$port, "encryption"=>$encryption, "username"=> trim($username), "password"=>$password,];
-            Log::info("sendTestMail 001 ",$log_sendTestMail);
+
+            $log_sendTestMail = ["server" => $server, "port" => $port, "encryption" => $encryption, "username" => trim($username), "password" => $password,];
+
             $e_s = new Email_Imap($server, $port, $encryption, $username, $password);
             $subject = "test";
             $content = "test " . date("y-m-d H:i:s");
             $sendTestMail = $e_s->sendTestMail("jasonup2020@gmail.com", $subject, $content);
-            $log_sendTestMail["sendTestMail"]=$sendTestMail;
-            
-            Log::info("sendTestMail 002 ",$log_sendTestMail);
-            $this->info(json_encode(["server"=>$server, "port"=>$port, "encryption"=>$encryption, "username"=>$username, "password"=>$password,"sendTestMail"=>$sendTestMail],256+64));
-            sleep(10); ###暂停10秒
+            $log_sendTestMail["sendTestMail"] = $sendTestMail;
+
+            if (empty($sendTestMail)) {
+                //邮件发送失败
+            } else {
+                //邮件发送成功
+            }
+            Log::info("sendTestMail :", ["username" => $username, "sendTestMail" => $sendTestMail]);
+            $this->info(json_encode(["server" => $server, "username" => $username, "sendTestMail" => $sendTestMail], 256 + 64));
+            sleep(5); ###暂停10秒
 //            usleep(30000); ######// 10 * 1000 = 10,000 微秒  暂停25毫秒
         }
     }

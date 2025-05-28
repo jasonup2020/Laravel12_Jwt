@@ -316,7 +316,7 @@ class Email_Imap {
             } else {
                 $mail->addAddress($to);
             }
-
+            
             // 邮件内容
             $mail->isHTML(true);                         // 启用 HTML 格式
             $mail->Subject = $subject;
