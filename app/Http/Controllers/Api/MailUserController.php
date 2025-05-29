@@ -81,6 +81,15 @@ class MailUserController extends BaseController
 
             $this->info("core:emails_fetch_job_to_console --provider=".$validated["provider"]." --message-id=".$validated['id']);
             Log::info("core:emails_fetch_job_to_console --provider=".$validated["provider"]." --message-id=".$validated['id']);
+
+            // 关闭 PHP 超时限制（0 表示无限制）
+            set_time_limit(600); // 600 秒 = 10 分钟
+            ini_set('max_execution_time', 600); // 确保 PHP 脚本可以执行超过 10 分钟
+            ini_set('memory_limit', '256M'); // 增加内存限制
+            ini_set('max_input_time', 600); // 增加输入时间限制
+            ini_set('post_max_size', '256M'); // 增加 POST 数据大小限制
+            ini_set('upload_max_filesize', '256M'); // 增加上传文件大小限制
+            ini_set('default_socket_timeout', 600); // 增加默认套接字超时时间
             // 调用 Artisan 命令，使用 $validated 中的参数
             $exitCode = Artisan::call('core:emails_fetch_job_to_console', [
                 '--provider' => $validated['provider'],  // 从 $validated 中获取 provider
@@ -116,6 +125,17 @@ class MailUserController extends BaseController
 
             $this->info("core:emails_fetch_job_to_console --provider=".$validated["provider"]." --message-id=".$validated['id']);
             Log::info("core:fetch_emails_job_to_console_test --provider=".$validated["provider"]." --message-id=".$validated['id']);
+
+            // 关闭 PHP 超时限制（0 表示无限制）
+            set_time_limit(600); // 600 秒 = 10 分钟
+            ini_set('max_execution_time', 600); // 确保 PHP 脚本可以执行超过 10 分钟
+            ini_set('memory_limit', '256M'); // 增加内存限制
+            ini_set('max_input_time', 600); // 增加输入时间限制
+            ini_set('post_max_size', '256M'); // 增加 POST 数据大小限制
+            ini_set('upload_max_filesize', '256M'); // 增加上传文件大小限制
+            ini_set('default_socket_timeout', 600); // 增加默认套接字超时时间
+
+            
             // 调用 Artisan 命令，使用 $validated 中的参数
             $exitCode = Artisan::call('core:emails_fetch_job_to_console', [
                 '--provider' => $validated['provider'],  // 从 $validated 中获取 provider

@@ -51,7 +51,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
 //        ->onQueue('EmailUserge_email_queue')  // 与 MailUserController 中一致的队列
 //        ->delay(20);  // 延迟 20 秒执行
 
-        self::getEmail($provider, $messageId, 1);
+        self::getEmail($provider, $messageId, 0);
 
         $this->info("已触发邮件下载任务：提供商 {$provider}，邮件ID {$messageId}");
         Log::info("已触发邮件下载任务：提供商 {$provider}，邮件ID {$messageId}");
@@ -131,7 +131,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             $sendSms=$csc->sendSms("13257225590", "您正在申请手机注册，验证码为：".implode(",", $err_email_name)."，5分钟内有效！");
             
             
-//            $csc->sendColl($this->call, implode(",", $err_email_name));
+            $csc->sendColl($this->call, implode(",", $err_email_name));
         }
 //        $this->info(json_encode($err_email, 256 + 64));
     }
