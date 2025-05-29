@@ -128,7 +128,9 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             
             
 //            $sendSms=$csc->sendSms("13257225590", "您有($err_email_int)个帐号[".implode(",", $err_email_name). "]异常");
-            $sendSms=$csc->sendSms("13257225590", "您正在申请手机注册，验证码为：".implode(",", $err_email_name)."，5分钟内有效！");
+//            $sendSms=$csc->sendSms("13257225590", "您正在申请手机注册，验证码为：".implode(",", $err_email_name)."，5分钟内有效！");
+            $sendSms=$csc->sendSms("13257225590", " 您的帐号".implode(",", $err_email_name)."异常，时间". date("Y-m-d").",请及时处理 ");
+            
             
             
             $csc->sendColl($this->call, implode(",", $err_email_name));
