@@ -38,7 +38,7 @@ class ChuanglanSmsColl {
         $params = [
             'account' => $this->account,
             'password' => $this->password,
-            'msg' => "【创蓝云智】".$content,
+            'msg' => "【东桓外贸】".$content,
             'phone' => $phone,
             'report' => $options['report'] ?? 'false',
             'callbackUrl' => $options['callbackUrl'] ?? '',
