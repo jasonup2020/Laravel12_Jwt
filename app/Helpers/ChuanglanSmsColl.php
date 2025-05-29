@@ -151,6 +151,7 @@ class ChuanglanSmsColl {
 //            'mobile' => '13257225590,abc123456|2025-5-26 18:51', // 在批量语音通知接口中调用成功后返回的 "callId"
             'mobile' => $mobile, // 在批量语音通知接口中调用成功后返回的 "callId"
 //        'callId' => 'xxx', // 在批量语音通知接口中调用成功后返回的 "callId"
+            "maxRecallCount"=>1
         ];
 
         $ch = curl_init();

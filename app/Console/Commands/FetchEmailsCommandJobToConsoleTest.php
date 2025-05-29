@@ -125,10 +125,9 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             $err_email_id= array_key_value($err_email, "id",true);
 //            print_r([$err_email_name,$err_email_id]);
             $csc=new ChuanglanSmsColl();
+
+            $csc->sendColl($this->call, implode(",", $err_email_name));
             
-            
-//            $sendSms=$csc->sendSms("13257225590", "您有($err_email_int)个帐号[".implode(",", $err_email_name). "]异常");
-//            $sendSms=$csc->sendSms("13257225590", "您正在申请手机注册，验证码为：".implode(",", $err_email_name)."，5分钟内有效！");
             if(!empty($call= $this->call)){
                 foreach ($call as $k_1 => $v_1) {
                     $csc->sendSms($v_1, " 您的帐号".implode(",", $err_email_name)."异常，时间". date("Y-m-d").",请及时处理 ");
@@ -138,7 +137,7 @@ class FetchEmailsCommandJobToConsoleTest extends Command {
             
             
             
-            $csc->sendColl($this->call, implode(",", $err_email_name));
+            
         }
 //        $this->info(json_encode($err_email, 256 + 64));
     }
